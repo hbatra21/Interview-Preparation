@@ -15,25 +15,41 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-TreeNode* Tree(ListNode* &head,int start,int end){
-    if(start>end)return NULL;
-    int mid=(end+start)/2;
-    TreeNode* l=Tree(head,start,mid-1);
-    TreeNode* root=new TreeNode(head->val);
-    head=head->next;
-    TreeNode* r=Tree(head,mid+1,end);
-    root->left=l;
-    root->right=r;
-    return root;
-} 
+TreeNode *newNode(int data)
+{
+    TreeNode *temp;
+    //cout<<"pass"<<endl;
+    temp = (TreeNode *)malloc(sizeof(TreeNode));
+    //cout<<"pass1"<<endl;
+    temp->val = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+TreeNode *cal(vector<int> &v,int start,int end)
+{
+    if(start>end)
+        return NULL;
+    if(start == end)
+        return newNode(v[start]);
+    int mid = (start+end)/2;
+    TreeNode *head = newNode(v[mid]);
+    head->left = cal(v,start,mid-1);
+    head->right = cal(v,mid+1,end);
+    return head;
+}
+ 
 TreeNode* Solution::sortedListToBST(ListNode* A) {
-    if(A==NULL) return NULL;
-    int len=0;
-    ListNode* curr=A;
-    while(curr!=NULL){
-        len++;
-        curr=curr->next;
+    vector<int> v;
+    ListNode *temp = A;
+    while(temp!=NULL)
+    {
+        v.push_back(temp->val);
+        temp = temp->next;
     }
-    return Tree(A,0,len-1);
-    
+    int size = v.size();
+    TreeNode *head;
+    head = cal(v,0,size-1);
+    return head;
 }
