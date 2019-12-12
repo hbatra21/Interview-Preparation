@@ -27,7 +27,7 @@ ListNode* Solution::rotateRight(ListNode* A, int B) {
         last=curr;
         curr=curr->next;
     }
-    head=curr;
+    head=curr; 
     last->next=NULL;
-    return head;
+    return head ;
 }
