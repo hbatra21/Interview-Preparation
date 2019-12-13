@@ -11,7 +11,7 @@ int Solution::solve(string A) {
                 break;
             }
             start++;
-            end--;
+            end--; 
         }
         if(pal){
             match = i + 1;
