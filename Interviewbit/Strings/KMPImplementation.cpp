@@ -6,33 +6,33 @@ using namespace std;
 int *pre_kmp(string pattern)
 {
 	int size = pattern.size();
-	int *pie=new int [size];
-	pie[0] = 0;
-	int k=0;
+	int *f = new int [size];
+	f[0] = 0;
+	int j = 0;
 	for(int i=1;i<size;i++)
 	{
-		while(k>0 && pattern[k] != pattern[i] )
+		while(j > 0 && pattern[j] != pattern[i] )
 		{
-			k=pie[k-1];
+			j = f[j-1];
 		}
-		if( pattern[k] == pattern[i] )
+		if( pattern[j] == pattern[i] )
 		{
-			k=k+1;
+			j++;
 		}
-		pie[i]=k;
+		f[i] = j;
 	}
 	
-	return pie;
+	return f;
 }
 
 void kmp(string text,string pattern)
 {
-	int* pie=pre_kmp(pattern);
+	int* f=pre_kmp(pattern);
 	int matched_pos=0;
 	for(int current=0; current< text.length(); current++)
 	{
 		while (matched_pos > 0 && pattern[matched_pos] != text[current] )
-			matched_pos = pie[matched_pos-1];
+			matched_pos = f[matched_pos-1];
 			
 		if(pattern[matched_pos] == text[current])
 			matched_pos = matched_pos+1;
@@ -40,7 +40,7 @@ void kmp(string text,string pattern)
 		if( matched_pos == (pattern.length()) )
 		{
 			cout<<"Pattern occurs with shift "<< current - (pattern.length() -1 );
-			matched_pos = pie[matched_pos-1];
+			matched_pos = f[matched_pos-1];
 		}
 	}
 }
