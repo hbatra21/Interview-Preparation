@@ -1,32 +1,27 @@
 class Solution {
 public:
+bool isPossible(const vector<int> &nums, int divisor, int threshold) {
+        int sum = 0;
+        for (auto dividend: nums) {
+            sum += ceil((double)dividend/divisor);
+        }
+        
+        return sum <= threshold;
+    }
+    
     int smallestDivisor(vector<int>& nums, int threshold) {
-    vector <int> v;
-		int ans = 0;
-		for (int i = 1; i <= threshold; i++) {
-			v.push_back(i);
-		}
-		int l = 0, r = v.size()-1;
-
-		while (l <= r) {
-			int mid = l + (r - l) / 2;
-			long long int sum = 0;
-			for (int i = 0; i < nums.size(); i++) {
-				if (nums[i] % v[mid] == 0) {
-					sum += (nums[i] / v[mid]);
-				} else{
-					sum += (nums[i] / v[mid]) + 1;
-				}
-			}
-
-			if (sum > threshold) {
-				l = mid + 1;
-			} else {
-				ans = v[mid];
-				r = mid - 1;
-			}
-		}
-
-		return ans;
+        int low = 1, high = pow(10, 9), mid, answer = INT_MAX;
+        
+        while (low <= high) {
+            mid = (low + high) >> 1;
+            if (isPossible(nums, mid, threshold)) {
+                answer = mid;
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }    
+        return answer;
     }
 };
