@@ -50,3 +50,53 @@ public:
         return res;
     }
 };
+
+// Approach 2
+class Solution 
+{
+    public:
+    vector<string> printVertically(string s) 
+    {
+        vector<string> result; //final results
+        vector<string> total; //the split of string s
+        string temp="";
+        int M=0;
+		//split the string by spaces
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]!=' ')
+            {
+                temp+=s[i];
+            }
+            else
+            {
+                total.push_back(temp);
+                M=max(M,(int)temp.length());
+                temp="";
+            }
+        }
+        total.push_back(temp);
+        M=max(M,(int)temp.length());// the maximium length of all the words
+        result=vector<string>(M,string((int)total.size(),' '));
+		//do the transposition
+        for(int i=0;i<M;i++)
+        {
+            for(int j=0;j<(int)total.size();j++)
+            {
+                if(i<total[j].length())
+                {
+                    result[i][j]=total[j][i];
+                }
+            }
+        }
+		//remove the trailing spaces
+        for(int i=0;i<result.size();i++)
+        {
+            while(result[i].back()==' ')
+            {
+                result[i].pop_back();
+            }
+        }
+        return result;
+    }
+};
