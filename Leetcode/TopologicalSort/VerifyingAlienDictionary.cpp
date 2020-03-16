@@ -20,6 +20,7 @@ public:
               if (word1.length() > word2.length() && flag == false)
                   return false;
         }
+        //
         return true;
     }
 };
